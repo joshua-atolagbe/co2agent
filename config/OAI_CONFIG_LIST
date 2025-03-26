@@ -1,0 +1,12 @@
+[
+    {
+        "model": "gpt-4o-mini",
+        "api_key": "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",
+        "tags": ["gpt-4o-mini", "tool", "vision"]
+    },
+    {
+        "model": "ft:gpt-4o-mini-2024-07-18:personal:wellgptx200kttx10ep:Ac9OWaNh",
+        "api_key": "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",
+        "tags": ["gpt-4o-mini", "tool", "vision"]
+    }
+]
