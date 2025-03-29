@@ -1,0 +1,46 @@
+flowchart TB
+    User([User])
+    
+    subgraph Frontend["Frontend (React)"]
+        UploadComponent[Upload Component]
+        StatusComponent[Status Tracking]
+        ResultsComponent[Results Display]
+        APIService[API Service]
+    end
+    
+    subgraph Backend["Backend (Flask)"]
+        UploadEndpoint["/api/upload"]
+        StatusEndpoint["/api/status/:taskId"]
+        ResultsEndpoint["/api/results/:taskId"]
+        DownloadEndpoint["/api/download/:taskId"]
+    end
+    
+    subgraph MultiAgentSystem["Multi-Agent System"]
+        PetrophysicistAgent[Petrophysicist Agent]
+        CoreAnalystAgent[Core Analyst Agent]
+        StructuralGeologistAgent[Structural Geologist Agent]
+        TechnicalReporterAgent[Technical Reporter Agent]
+    end
+    
+    User -->|Uploads Well Report| UploadComponent
+    UploadComponent -->|Sends File| APIService
+    APIService -->|POST Request| UploadEndpoint
+    
+    UploadEndpoint -->|Stores File| FileSystem[(File System)]
+    UploadEndpoint -->|Creates Task| TaskDB[(Task Database)]
+    UploadEndpoint -->|Starts Analysis| MultiAgentSystem
+    
+    StatusComponent -->|Polls Status| APIService
+    APIService -->|GET Request| StatusEndpoint
+    StatusEndpoint -->|Retrieves Status| TaskDB
+    
+    MultiAgentSystem --> TaskDB
+    MultiAgentSystem -->|Generates| Reports[(PDF Reports)]
+    
+    ResultsComponent -->|Requests Results| APIService
+    APIService -->|GET Request| ResultsEndpoint
+    ResultsEndpoint -->|Retrieves Results| TaskDB
+    
+    User -->|Downloads Report| APIService
+    APIService -->|GET Request| DownloadEndpoint
+    DownloadEndpoint -->|Retrieves PDF| Reports
